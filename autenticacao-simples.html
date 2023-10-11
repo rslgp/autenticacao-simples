@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Authentication</title>
+</head>
+<body>
+    <h1>User Authentication</h1>
+    <form action="https://qx8d2nrbe0.execute-api.sa-east-1.amazonaws.com/default/autenticacao-simples" method="GET">
+        <label for="param">Enter the authentication string:</label>
+        <input type="text" id="param" name="param" required>
+        <br>
+        <input type="submit" value="Authenticate">
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const paramValue = document.getElementById('param').value;
+            const apiUrl = 'https://qx8d2nrbe0.execute-api.sa-east-1.amazonaws.com/default/autenticacao-simples?param=' + encodeURIComponent(paramValue);
+
+            try {
+                const response = await fetch(apiUrl);
+                if (response.status === 200) {
+                    document.getElementById('result').innerText = 'Authentication successful';
+                } else {
+                    document.getElementById('result').innerText = 'Authentication failed';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
